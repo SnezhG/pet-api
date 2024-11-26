@@ -6,9 +6,11 @@ import ru.vlsu.pet_api.entity.Activity;
 
 import java.util.List;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface ActivityMapper {
-    ActivityDTO acticityToActivityDTO(Activity activity);
+    ActivityDTO toDTO(Activity activity);
 
-    List<ActivityDTO> activityListToActivityDTO(List<Activity> activities);
+    Activity toEntity(ActivityDTO activityDTO);
+
+    List<ActivityDTO> toDTOList(List<Activity> activities);
 }

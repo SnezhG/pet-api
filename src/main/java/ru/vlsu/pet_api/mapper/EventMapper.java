@@ -6,9 +6,11 @@ import ru.vlsu.pet_api.entity.Event;
 
 import java.util.List;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface EventMapper {
-    EventDTO eventToEventDTO(Event event);
+    EventDTO toDTO(Event event);
 
-    List<EventDTO> eventListToEventDTO(List<Event> events);
+    Event toEntity(EventDTO eventDTO);
+
+    List<EventDTO> toDTOList(List<Event> events);
 }

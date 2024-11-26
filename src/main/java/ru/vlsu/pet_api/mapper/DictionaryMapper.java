@@ -12,7 +12,7 @@ import ru.vlsu.pet_api.entity.Species;
 
 import java.util.List;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface DictionaryMapper {
     List<BreedDTO> breedListToBreedDTOList(List<Breed> breeds);
 
