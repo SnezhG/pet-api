@@ -13,6 +13,6 @@ public class EventType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @OneToMany(mappedBy = "eventType")
+    @OneToMany(mappedBy = "type")
     private List<Event> events;
 }
