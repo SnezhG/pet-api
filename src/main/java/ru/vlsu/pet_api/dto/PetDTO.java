@@ -9,7 +9,6 @@ import java.util.Date;
 @Data
 public class PetDTO {
     private Long id;
-
     private String name;
     private SpeciesDTO species;
     private BreedDTO breed;
@@ -18,4 +17,5 @@ public class PetDTO {
     private String weight;
     private Blob photo;
     private String health;
+    private PetUserDTO user;
 }

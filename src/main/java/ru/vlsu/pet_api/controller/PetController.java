@@ -1,13 +1,15 @@
 package ru.vlsu.pet_api.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import ru.vlsu.pet_api.dto.PetDTO;
+import ru.vlsu.pet_api.entity.Pet;
 import ru.vlsu.pet_api.mapper.PetMapper;
 import ru.vlsu.pet_api.service.PetService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/pet")
@@ -22,8 +24,26 @@ public class PetController {
         return mapper.petToPetDTO(service.getById(id));
     }
 
-//    @GetMapping
-//    public List<PetDTO> getAll() {
-//        return mapper.petListToPetDTOList(service)
-//    }
+    @GetMapping("/by-user/{id}")
+    public List<PetDTO> getAllByUser(@PathVariable Long id) {
+        return mapper.petListToPetDTOList(service.getAllByUser(id));
+    }
+
+    @PostMapping("/add")
+    public Pet create(@RequestBody PetDTO petDTO) {
+        Pet pet = mapper.petDTOToPet(petDTO);
+        return service.create(pet);
+    }
+
+    @PostMapping("/edit")
+    public Pet update(@RequestBody PetDTO petDTO) {
+        Pet pet = mapper.petDTOToPet(petDTO);
+        return service.update(pet);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        service.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
