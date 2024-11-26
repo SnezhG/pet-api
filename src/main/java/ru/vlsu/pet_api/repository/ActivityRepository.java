@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import ru.vlsu.pet_api.entity.Activity;
 
 @Repository
-public interface ActivityRepository extends JpaRepository<Activity, Repository> {
+public interface ActivityRepository extends JpaRepository<Activity, Long> {
 }
