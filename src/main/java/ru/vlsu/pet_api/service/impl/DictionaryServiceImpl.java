@@ -26,8 +26,8 @@ public class DictionaryServiceImpl implements DictionaryService {
     private ActivityTypeRepository activityTypeRepository;
 
     @Override
-    public List<Breed> getAllBreeds() {
-        return breedRepository.findAll();
+    public List<Breed> getAllBreedsBySpecies(Long id) {
+        return breedRepository.findAllBySpecies_Id(id);
     }
 
     @Override

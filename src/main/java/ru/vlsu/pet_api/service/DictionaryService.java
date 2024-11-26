@@ -8,7 +8,7 @@ import ru.vlsu.pet_api.entity.Species;
 import java.util.List;
 
 public interface DictionaryService {
-    List<Breed> getAllBreeds();
+    List<Breed> getAllBreedsBySpecies(Long id);
 
     List<ActivityType> getAllActivityTypes();
 

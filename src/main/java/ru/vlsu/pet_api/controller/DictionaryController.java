@@ -2,6 +2,7 @@ package ru.vlsu.pet_api.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.vlsu.pet_api.dto.ActivityTypeDTO;
@@ -21,9 +22,9 @@ public class DictionaryController {
     @Autowired
     private DictionaryMapper mapper;
 
-    @GetMapping("/all-breeds")
-    public List<BreedDTO> getAllBreeds() {
-        return mapper.breedListToBreedDTOList(service.getAllBreeds());
+    @GetMapping("/all-breeds-by-species/{id}")
+    public List<BreedDTO> getAllBreedsBySpecies(@PathVariable Long id) {
+        return mapper.breedListToBreedDTOList(service.getAllBreedsBySpecies(id));
     }
 
     @GetMapping("/all-species")
