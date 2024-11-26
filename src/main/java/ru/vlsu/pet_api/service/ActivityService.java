@@ -7,5 +7,11 @@ import java.util.List;
 public interface ActivityService {
     Activity getById(Long id);
 
-    List<Activity> getAll();
+    List<Activity> getAllByUser(Long id);
+
+    Activity create(Activity activity);
+
+    Activity update(Activity newActivity);
+
+    void delete(Long id);
 }

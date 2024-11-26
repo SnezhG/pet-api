@@ -13,6 +13,6 @@ public class ActivityType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @OneToMany(mappedBy = "activityType")
+    @OneToMany(mappedBy = "type")
     private List<Activity> activities;
 }
