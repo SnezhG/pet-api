@@ -15,4 +15,7 @@ public class Breed {
     private String name;
     @OneToMany(mappedBy = "breed")
     private List<Pet> pets;
+    @ManyToOne
+    @JoinColumn(name = "species_id")
+    private Species species;
 }

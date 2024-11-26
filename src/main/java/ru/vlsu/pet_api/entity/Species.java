@@ -15,4 +15,6 @@ public class Species {
     private String name;
     @OneToMany(mappedBy = "species")
     private List<Pet> pets;
+    @OneToMany(mappedBy = "species")
+    private List<Breed> breeds;
 }
