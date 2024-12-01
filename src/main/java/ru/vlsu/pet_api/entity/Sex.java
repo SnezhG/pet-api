@@ -6,13 +6,13 @@ import lombok.Data;
 import java.util.List;
 
 @Entity
-@Table(name = "activity_type")
+@Table(name = "sex")
 @Data
-public class ActivityType {
+public class Sex {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @OneToMany(mappedBy = "type")
-    private List<Activity> activities;
+    @OneToMany(mappedBy = "sex")
+    private List<Pet> pets;
 }

@@ -1,11 +1,11 @@
 package ru.vlsu.pet_api.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.sql.Blob;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -24,16 +24,17 @@ public class Pet {
     @ManyToOne
     @JoinColumn(name = "breed_id")
     private Breed breed;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
-    private Date birthDate;
+    @ManyToOne
+    @JoinColumn(name = "sex_id")
+    private Sex sex;
+    private LocalDate birthDate;
     private String weight;
     private Blob photo;
     private String health;
     @ManyToOne
     @JoinColumn(name = "pet_user_id")
+    @JsonIgnore
     private PetUser user;
     @OneToMany(mappedBy = "pet")
-    private List<Activity> activities;
-    @OneToMany(mappedBy = "pet")
-    private List<Event> events;
+    private List<PetEvent> petEvents;
 }

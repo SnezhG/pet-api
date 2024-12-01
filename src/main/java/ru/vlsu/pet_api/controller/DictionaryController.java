@@ -5,9 +5,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.vlsu.pet_api.dto.ActivityTypeDTO;
 import ru.vlsu.pet_api.dto.BreedDTO;
-import ru.vlsu.pet_api.dto.EventTypeDTO;
+import ru.vlsu.pet_api.dto.PetEventTypeDTO;
+import ru.vlsu.pet_api.dto.SexDTO;
 import ru.vlsu.pet_api.dto.SpeciesDTO;
 import ru.vlsu.pet_api.mapper.DictionaryMapper;
 import ru.vlsu.pet_api.service.DictionaryService;
@@ -33,12 +33,12 @@ public class DictionaryController {
     }
 
     @GetMapping("/all-event-types")
-    public List<EventTypeDTO> getAllEventTypes() {
+    public List<PetEventTypeDTO> getAllEventTypes() {
         return mapper.eventTypeListToEventTypeDTOList(service.getAllEventTypes());
     }
 
-    @GetMapping("/all-activity-types")
-    public List<ActivityTypeDTO> getAllActivityTypes() {
-        return mapper.activityTypeListToActivityTypeDTOList(service.getAllActivityTypes());
+    @GetMapping("/all-sexes")
+    public List<SexDTO> getAllSexes() {
+        return mapper.sexListTosexDTOList(service.getAllSexes());
     }
 }

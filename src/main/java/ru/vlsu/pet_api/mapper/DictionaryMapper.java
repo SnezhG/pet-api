@@ -1,13 +1,13 @@
 package ru.vlsu.pet_api.mapper;
 
 import org.mapstruct.Mapper;
-import ru.vlsu.pet_api.dto.ActivityTypeDTO;
 import ru.vlsu.pet_api.dto.BreedDTO;
-import ru.vlsu.pet_api.dto.EventTypeDTO;
+import ru.vlsu.pet_api.dto.PetEventTypeDTO;
+import ru.vlsu.pet_api.dto.SexDTO;
 import ru.vlsu.pet_api.dto.SpeciesDTO;
-import ru.vlsu.pet_api.entity.ActivityType;
 import ru.vlsu.pet_api.entity.Breed;
-import ru.vlsu.pet_api.entity.EventType;
+import ru.vlsu.pet_api.entity.PetEventType;
+import ru.vlsu.pet_api.entity.Sex;
 import ru.vlsu.pet_api.entity.Species;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public interface DictionaryMapper {
 
     List<SpeciesDTO> speciesListToSpeciesDTOList(List<Species> species);
 
-    List<ActivityTypeDTO> activityTypeListToActivityTypeDTOList(List<ActivityType> activityTypes);
+    List<PetEventTypeDTO> eventTypeListToEventTypeDTOList(List<PetEventType> petEventTypes);
 
-    List<EventTypeDTO> eventTypeListToEventTypeDTOList(List<EventType> eventTypes);
+    List<SexDTO> sexListTosexDTOList(List<Sex> sexes);
 }

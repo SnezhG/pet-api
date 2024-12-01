@@ -2,13 +2,13 @@ package ru.vlsu.pet_api.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.vlsu.pet_api.entity.ActivityType;
 import ru.vlsu.pet_api.entity.Breed;
-import ru.vlsu.pet_api.entity.EventType;
+import ru.vlsu.pet_api.entity.PetEventType;
+import ru.vlsu.pet_api.entity.Sex;
 import ru.vlsu.pet_api.entity.Species;
-import ru.vlsu.pet_api.repository.ActivityTypeRepository;
 import ru.vlsu.pet_api.repository.BreedRepository;
-import ru.vlsu.pet_api.repository.EventTypeRepository;
+import ru.vlsu.pet_api.repository.PetEventTypeRepository;
+import ru.vlsu.pet_api.repository.SexRepository;
 import ru.vlsu.pet_api.repository.SpeciesRepository;
 import ru.vlsu.pet_api.service.DictionaryService;
 
@@ -21,9 +21,9 @@ public class DictionaryServiceImpl implements DictionaryService {
     @Autowired
     private SpeciesRepository speciesRepository;
     @Autowired
-    private EventTypeRepository eventTypeRepository;
+    private PetEventTypeRepository petEventTypeRepository;
     @Autowired
-    private ActivityTypeRepository activityTypeRepository;
+    private SexRepository sexRepository;
 
     @Override
     public List<Breed> getAllBreedsBySpecies(Long id) {
@@ -31,17 +31,17 @@ public class DictionaryServiceImpl implements DictionaryService {
     }
 
     @Override
-    public List<ActivityType> getAllActivityTypes() {
-        return activityTypeRepository.findAll();
-    }
-
-    @Override
-    public List<EventType> getAllEventTypes() {
-        return eventTypeRepository.findAll();
+    public List<PetEventType> getAllEventTypes() {
+        return petEventTypeRepository.findAll();
     }
 
     @Override
     public List<Species> getAllSpecies() {
         return speciesRepository.findAll();
+    }
+
+    @Override
+    public List<Sex> getAllSexes() {
+        return sexRepository.findAll();
     }
 }
