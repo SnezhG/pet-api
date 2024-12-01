@@ -7,15 +7,15 @@ import lombok.Data;
 import java.util.Date;
 
 @Entity
-@Table(name = "event")
+@Table(name = "pet_event")
 @Data
-public class Event {
+public class PetEvent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    @JoinColumn(name = "event_type_id")
-    private EventType type;
+    @JoinColumn(name = "pet_event_type_id")
+    private PetEventType type;
     @ManyToOne
     @JoinColumn(name = "pet_id")
     private Pet pet;

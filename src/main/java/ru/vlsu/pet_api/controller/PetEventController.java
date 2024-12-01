@@ -4,41 +4,41 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.vlsu.pet_api.dto.EventDTO;
-import ru.vlsu.pet_api.entity.Event;
-import ru.vlsu.pet_api.mapper.EventMapper;
-import ru.vlsu.pet_api.service.EventService;
+import ru.vlsu.pet_api.dto.PetEventDTO;
+import ru.vlsu.pet_api.entity.PetEvent;
+import ru.vlsu.pet_api.mapper.PetEventMapper;
+import ru.vlsu.pet_api.service.PetEventService;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/event")
-public class EventController {
+public class PetEventController {
     @Autowired
-    private EventService service;
+    private PetEventService service;
     @Autowired
-    private EventMapper mapper;
+    private PetEventMapper mapper;
 
     @GetMapping("/{id}")
-    public EventDTO getById(@PathVariable Long id) {
+    public PetEventDTO getById(@PathVariable Long id) {
         return mapper.toDTO(service.getById(id));
     }
 
     @GetMapping("/by-user/{id}")
-    public List<EventDTO> getAllByUser(@PathVariable Long id) {
+    public List<PetEventDTO> getAllByUser(@PathVariable Long id) {
         return mapper.toDTOList(service.getAllByUser(id));
     }
 
     @PostMapping("/add")
-    public Event create(@RequestBody EventDTO eventDTO) {
-        Event event = mapper.toEntity(eventDTO);
-        return service.create(event);
+    public PetEvent create(@RequestBody PetEventDTO petEventDTO) {
+        PetEvent petEvent = mapper.toEntity(petEventDTO);
+        return service.create(petEvent);
     }
 
     @PostMapping("/edit")
-    public Event update(@RequestBody EventDTO eventDTO) {
-        Event event = mapper.toEntity(eventDTO);
-        return service.update(event);
+    public PetEvent update(@RequestBody PetEventDTO petEventDTO) {
+        PetEvent petEvent = mapper.toEntity(petEventDTO);
+        return service.update(petEvent);
     }
 
     @DeleteMapping("/{id}")

@@ -17,8 +17,6 @@ public class PetUser {
     @OneToMany(mappedBy = "user")
     private List<Pet> pets;
     @OneToMany(mappedBy = "user")
-    private List<Activity> activities;
-    @OneToMany(mappedBy = "user")
-    private List<Event> events;
+    private List<PetEvent> petEvents;
 
 }

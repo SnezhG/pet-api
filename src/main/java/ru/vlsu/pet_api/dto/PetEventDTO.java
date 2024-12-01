@@ -6,9 +6,9 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class EventDTO {
+public class PetEventDTO {
     private Long id;
-    private EventTypeDTO type;
+    private PetEventTypeDTO type;
     private PetDTO pet;
     private String description;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy HH:mm:ss", timezone = "Europe/Moscow")

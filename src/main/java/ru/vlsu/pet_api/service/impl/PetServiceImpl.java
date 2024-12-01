@@ -35,12 +35,12 @@ public class PetServiceImpl implements PetService {
         Optional<Pet> oldPet = baseRepository.findById(newPet.getId());
         if (oldPet.isPresent()) {
             Pet pet = oldPet.get();
-            pet.setActivities(newPet.getActivities());
             pet.setHealth(newPet.getHealth());
-            pet.setEvents(newPet.getEvents());
+            pet.setPetEvents(newPet.getPetEvents());
             pet.setBirthDate(newPet.getBirthDate());
             pet.setSpecies(newPet.getSpecies());
             pet.setBreed(newPet.getBreed());
+            pet.setSex(newPet.getSex());
             pet.setName(newPet.getName());
             pet.setWeight(newPet.getWeight());
             pet.setPhoto(newPet.getPhoto());

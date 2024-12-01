@@ -3,7 +3,7 @@ package ru.vlsu.pet_api.dto;
 import lombok.Data;
 
 @Data
-public class EventTypeDTO {
+public class PetEventTypeDTO {
     private Long id;
     private String name;
 }

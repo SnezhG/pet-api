@@ -2,8 +2,8 @@ package ru.vlsu.pet_api.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import ru.vlsu.pet_api.entity.EventType;
+import ru.vlsu.pet_api.entity.PetEventType;
 
 @Repository
-public interface EventTypeRepository extends JpaRepository<EventType, Long> {
+public interface PetEventTypeRepository extends JpaRepository<PetEventType, Long> {
 }
