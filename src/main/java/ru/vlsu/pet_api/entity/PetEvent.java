@@ -1,10 +1,10 @@
 package ru.vlsu.pet_api.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "pet_event")
@@ -20,10 +20,9 @@ public class PetEvent {
     @JoinColumn(name = "pet_id")
     private Pet pet;
     private String description;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy HH:mm:ss", timezone = "Europe/Moscow")
-    private Date dateTime;
-    private boolean isNotificationEnabled;
+    private LocalDate date;
     @ManyToOne
     @JoinColumn(name = "pet_user_id")
+    @JsonBackReference
     private PetUser user;
 }

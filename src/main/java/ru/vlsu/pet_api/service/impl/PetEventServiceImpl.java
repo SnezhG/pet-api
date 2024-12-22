@@ -6,6 +6,7 @@ import ru.vlsu.pet_api.entity.PetEvent;
 import ru.vlsu.pet_api.repository.PetEventRepository;
 import ru.vlsu.pet_api.service.PetEventService;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,6 +27,18 @@ public class PetEventServiceImpl implements PetEventService {
     }
 
     @Override
+    public List<PetEvent> getAllOnWeekByUser(Long id) {
+        LocalDate startDate = LocalDate.now();
+        LocalDate endDate = startDate.plusDays(6);
+        return repository.findAllByUser_IdAndDateBetween(id, startDate, endDate);
+    }
+
+    @Override
+    public List<PetEvent> getAllByUserAndDate(Long id, LocalDate date) {
+        return repository.findAllByUser_IdAndDate(id, date);
+    }
+
+    @Override
     public PetEvent create(PetEvent petEvent) {
         return repository.save(petEvent);
     }
@@ -33,11 +46,10 @@ public class PetEventServiceImpl implements PetEventService {
     @Override
     public PetEvent update(PetEvent newPetEvent) {
         PetEvent oldPetEvent = getById(newPetEvent.getId());
-        oldPetEvent.setDateTime(newPetEvent.getDateTime());
+        oldPetEvent.setDate(newPetEvent.getDate());
         oldPetEvent.setType(newPetEvent.getType());
         oldPetEvent.setPet(newPetEvent.getPet());
         oldPetEvent.setDescription(newPetEvent.getDescription());
-        oldPetEvent.setNotificationEnabled(newPetEvent.isNotificationEnabled());
         return repository.save(oldPetEvent);
     }
 

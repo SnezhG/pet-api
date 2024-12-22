@@ -9,6 +9,7 @@ import ru.vlsu.pet_api.entity.PetEvent;
 import ru.vlsu.pet_api.mapper.PetEventMapper;
 import ru.vlsu.pet_api.service.PetEventService;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -24,18 +25,28 @@ public class PetEventController {
         return mapper.toDTO(service.getById(id));
     }
 
-    @GetMapping("/by-user/{id}")
+    @GetMapping("/by-user-week/{id}")
+    public List<PetEventDTO> getAllOnWeekByUser(@PathVariable Long id) {
+        return mapper.toDTOList(service.getAllOnWeekByUser(id));
+    }
+
+    @GetMapping("/by-user-all/{id}")
     public List<PetEventDTO> getAllByUser(@PathVariable Long id) {
         return mapper.toDTOList(service.getAllByUser(id));
     }
 
-    @PostMapping("/add")
+    @GetMapping("/by-date/{id}/{date}")
+    public List<PetEventDTO> getAllByDate(@PathVariable Long id, @PathVariable LocalDate date) {
+        return mapper.toDTOList(service.getAllByUserAndDate(id, date));
+    }
+
+    @PostMapping("/create")
     public PetEvent create(@RequestBody PetEventDTO petEventDTO) {
         PetEvent petEvent = mapper.toEntity(petEventDTO);
         return service.create(petEvent);
     }
 
-    @PostMapping("/edit")
+    @PostMapping("/update")
     public PetEvent update(@RequestBody PetEventDTO petEventDTO) {
         PetEvent petEvent = mapper.toEntity(petEventDTO);
         return service.update(petEvent);

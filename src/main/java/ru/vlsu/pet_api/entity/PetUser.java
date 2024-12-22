@@ -1,5 +1,6 @@
 package ru.vlsu.pet_api.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -15,8 +16,10 @@ public class PetUser {
     private String email;
     private String password;
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference
     private List<Pet> pets;
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference
     private List<PetEvent> petEvents;
 
 }

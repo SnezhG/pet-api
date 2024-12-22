@@ -3,7 +3,7 @@ package ru.vlsu.pet_api.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 public class PetEventDTO {
@@ -11,7 +11,7 @@ public class PetEventDTO {
     private PetEventTypeDTO type;
     private PetDTO pet;
     private String description;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy HH:mm:ss", timezone = "Europe/Moscow")
-    private Date dateTime;
-    private boolean isNotificationEnabled;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy", timezone = "Europe/Moscow")
+    private LocalDate date;
+    private PetUserDTO user;
 }
