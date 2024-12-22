@@ -1,10 +1,9 @@
 package ru.vlsu.pet_api.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.sql.Blob;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -29,11 +28,11 @@ public class Pet {
     private Sex sex;
     private LocalDate birthDate;
     private String weight;
-    private Blob photo;
+    private String photo;
     private String health;
     @ManyToOne
     @JoinColumn(name = "pet_user_id")
-    @JsonIgnore
+    @JsonBackReference
     private PetUser user;
     @OneToMany(mappedBy = "pet")
     private List<PetEvent> petEvents;

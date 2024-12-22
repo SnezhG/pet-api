@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
-import java.sql.Blob;
 import java.time.LocalDate;
 
 @Data
@@ -18,6 +17,7 @@ public class PetDTO {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
     private LocalDate birthDate;
     private String weight;
-    private Blob photo;
     private String health;
+    private String photo;
+    private PetUserDTO user;
 }
