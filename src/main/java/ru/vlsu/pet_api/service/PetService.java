@@ -10,9 +10,9 @@ public interface PetService {
 
     List<Pet> getAllByUser(Long userId) throws IOException;
 
-    Pet create(Pet pet) throws IOException;
+    Long create(Pet pet) throws IOException;
 
-    Pet update(Pet newPet) throws IOException;
+    Long update(Pet newPet) throws IOException;
 
     void delete(Long petId) throws IOException;
 }

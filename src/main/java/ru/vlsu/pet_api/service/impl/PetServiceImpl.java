@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.vlsu.pet_api.entity.Pet;
 import ru.vlsu.pet_api.repository.PetRepository;
-import ru.vlsu.pet_api.service.PetFileServiceImpl;
 import ru.vlsu.pet_api.service.PetService;
 
 import java.io.IOException;
@@ -45,14 +44,15 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
-    public Pet create(Pet pet) throws IOException {
+    public Long create(Pet pet) throws IOException {
         String photoUri = petFileService.uploadFile(pet.getPhoto(), pet.getUser().getId().toString());
         pet.setPhoto(photoUri);
-        return baseRepository.save(pet);
+        Pet savedPet = baseRepository.save(pet);
+        return savedPet.getId();
     }
 
     @Override
-    public Pet update(Pet newPet) throws IOException {
+    public Long update(Pet newPet) throws IOException {
         Optional<Pet> oldPet = baseRepository.findById(newPet.getId());
         if (oldPet.isPresent()) {
             Pet pet = oldPet.get();
@@ -66,7 +66,8 @@ public class PetServiceImpl implements PetService {
             pet.setWeight(newPet.getWeight());
             String photoUri = petFileService.uploadFile(newPet.getPhoto(), pet.getUser().getId().toString());
             pet.setPhoto(photoUri);
-            return baseRepository.save(pet);
+            Pet savedPet = baseRepository.save(pet);
+            return savedPet.getId();
         }
         return null;
     }

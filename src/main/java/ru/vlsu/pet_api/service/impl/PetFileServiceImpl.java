@@ -1,6 +1,7 @@
-package ru.vlsu.pet_api.service;
+package ru.vlsu.pet_api.service.impl;
 
 import org.springframework.stereotype.Service;
+import ru.vlsu.pet_api.service.PetFileService;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -11,9 +12,10 @@ import java.util.Base64;
 import java.util.UUID;
 
 @Service
-public class PetFileServiceImpl {
+public class PetFileServiceImpl implements PetFileService {
     private static final String BASE_DIRECTORY = "files";
 
+    @Override
     public String uploadFile(String fileBase64, String userId) throws IOException {
         try {
             // Декодируем Base64 в массив байтов
@@ -40,6 +42,7 @@ public class PetFileServiceImpl {
         }
     }
 
+    @Override
     public String downloadFile(String fileUri) throws IOException {
         try {
             // Формируем полный путь к файлу

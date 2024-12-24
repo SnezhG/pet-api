@@ -20,28 +20,36 @@ public class PetController {
     @Autowired
     private PetMapper mapper;
 
-    private static final String UPLOAD_DIR = "files";
-
     @GetMapping("/{id}")
-    public PetDTO getById(@PathVariable Long id) throws IOException {
-        return mapper.petToPetDTO(service.getById(id));
+    public ResponseEntity<PetDTO> getById(@PathVariable Long id) throws IOException {
+        PetDTO petDTO = mapper.petToPetDTO(service.getById(id));
+        return ResponseEntity.ok(petDTO);
     }
 
     @GetMapping("/by-user/{id}")
-    public List<PetDTO> getAllByUser(@PathVariable Long id) throws IOException {
-        return mapper.petListToPetDTOList(service.getAllByUser(id));
+    public ResponseEntity<List<PetDTO>> getAllByUser(@PathVariable Long id) throws IOException {
+        List<PetDTO> petDTOList = mapper.petListToPetDTOList(service.getAllByUser(id));
+        return ResponseEntity.ok(petDTOList);
     }
 
     @PostMapping("/create")
-    public Pet create(@RequestBody PetDTO petDTO) throws IOException {
+    public ResponseEntity<Long> create(@RequestBody PetDTO petDTO) throws IOException {
         Pet pet = mapper.petDTOToPet(petDTO);
-        return service.create(pet);
+        Long petId = service.create(pet);
+        if (petId != null) {
+            return ResponseEntity.ok(petId);
+        }
+        return ResponseEntity.badRequest().build();
     }
 
     @PostMapping("/update")
-    public Pet update(@RequestBody PetDTO petDTO) throws IOException {
+    public ResponseEntity<Long> update(@RequestBody PetDTO petDTO) throws IOException {
         Pet pet = mapper.petDTOToPet(petDTO);
-        return service.update(pet);
+        Long petId = service.update(pet);
+        if (petId != null) {
+            return ResponseEntity.ok(petId);
+        }
+        return ResponseEntity.badRequest().build();
     }
 
     @DeleteMapping("/{id}")
