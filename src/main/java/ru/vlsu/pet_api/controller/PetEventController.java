@@ -1,5 +1,6 @@
 package ru.vlsu.pet_api.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/event")
+@Slf4j
 public class PetEventController {
     @Autowired
     private PetEventService service;

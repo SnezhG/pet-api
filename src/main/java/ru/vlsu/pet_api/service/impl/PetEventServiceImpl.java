@@ -1,19 +1,25 @@
 package ru.vlsu.pet_api.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.vlsu.pet_api.entity.PetEvent;
+import ru.vlsu.pet_api.entity.PetEventsNotif;
 import ru.vlsu.pet_api.repository.PetEventRepository;
 import ru.vlsu.pet_api.service.PetEventService;
+import ru.vlsu.pet_api.service.PetEventsNotifService;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class PetEventServiceImpl implements PetEventService {
     @Autowired
     private PetEventRepository repository;
+    @Autowired
+    private PetEventsNotifService petEventsNotifService;
 
     @Override
     public PetEvent getById(Long id) {
@@ -40,6 +46,10 @@ public class PetEventServiceImpl implements PetEventService {
 
     @Override
     public PetEvent create(PetEvent petEvent) {
+        if (petEvent.isNotifEnabled()) {
+            PetEventsNotif petEventsNotif = petEventsNotifService.createPetEventNotif(petEvent);
+            petEvent.setPetEventsNotif(petEventsNotif);
+        }
         return repository.save(petEvent);
     }
 
@@ -50,6 +60,16 @@ public class PetEventServiceImpl implements PetEventService {
         oldPetEvent.setType(newPetEvent.getType());
         oldPetEvent.setPet(newPetEvent.getPet());
         oldPetEvent.setDescription(newPetEvent.getDescription());
+        if (newPetEvent.isNotifEnabled() && oldPetEvent.isNotifEnabled()) {
+            petEventsNotifService.updatePetEventNotif(oldPetEvent, newPetEvent);
+        } else if (!newPetEvent.isNotifEnabled() && oldPetEvent.isNotifEnabled()) {
+            petEventsNotifService.cancelPetEventsNotif(oldPetEvent);
+        } else if (newPetEvent.isNotifEnabled() && oldPetEvent.getPetEventsNotif() == null) {
+            PetEventsNotif petEventsNotif = petEventsNotifService.createPetEventNotif(newPetEvent);
+            oldPetEvent.setPetEventsNotif(petEventsNotif);
+        } else if (newPetEvent.isNotifEnabled()) {
+            petEventsNotifService.updatePetEventNotif(oldPetEvent, newPetEvent);
+        }
         return repository.save(oldPetEvent);
     }
 
@@ -58,4 +78,5 @@ public class PetEventServiceImpl implements PetEventService {
         PetEvent petEvent = getById(id);
         repository.delete(petEvent);
     }
+
 }
