@@ -1,5 +1,6 @@
 package ru.vlsu.pet_api.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,35 +24,47 @@ public class PetEventController {
     private PetEventMapper mapper;
 
     @GetMapping("/{id}")
-    public PetEventDTO getById(@PathVariable Long id) {
-        return mapper.toDTO(service.getById(id));
+    public ResponseEntity<PetEventDTO> getById(@PathVariable Long id) {
+        PetEventDTO petEventDTO = mapper.toDTO(service.getById(id));
+        return ResponseEntity.ok(petEventDTO);
     }
 
-    @GetMapping("/by-user-week/{id}")
-    public List<PetEventDTO> getAllOnWeekByUser(@PathVariable Long id) {
-        return mapper.toDTOList(service.getAllOnWeekByUser(id));
+    @GetMapping("/by-user-week")
+    public ResponseEntity<List<PetEventDTO>> getAllOnWeekByUser(HttpServletRequest request) {
+        List<PetEventDTO> petEventDTOList = mapper.toDTOList(service.getAllOnWeekByUser(request));
+        return ResponseEntity.ok(petEventDTOList);
     }
 
-    @GetMapping("/by-user-all/{id}")
-    public List<PetEventDTO> getAllByUser(@PathVariable Long id) {
-        return mapper.toDTOList(service.getAllByUser(id));
+    @GetMapping("/by-user-all")
+    public ResponseEntity<List<PetEventDTO>> getAllByUser(HttpServletRequest request) {
+        List<PetEventDTO> petEventDTOList = mapper.toDTOList(service.getAllByUser(request));
+        return ResponseEntity.ok(petEventDTOList);
     }
 
-    @GetMapping("/by-date/{id}/{date}")
-    public List<PetEventDTO> getAllByDate(@PathVariable Long id, @PathVariable LocalDate date) {
-        return mapper.toDTOList(service.getAllByUserAndDate(id, date));
+    @GetMapping("/by-date/{date}")
+    public ResponseEntity<List<PetEventDTO>> getAllByDate(@PathVariable LocalDate date, HttpServletRequest request) {
+        List<PetEventDTO> petEventDTOList = mapper.toDTOList(service.getAllByUserAndDate(date, request));
+        return ResponseEntity.ok(petEventDTOList);
     }
 
     @PostMapping("/create")
-    public PetEvent create(@RequestBody PetEventDTO petEventDTO) {
+    public ResponseEntity<Long> create(@RequestBody PetEventDTO petEventDTO, HttpServletRequest request) {
         PetEvent petEvent = mapper.toEntity(petEventDTO);
-        return service.create(petEvent);
+        Long petEventId = service.create(petEvent, request);
+        if (petEventId != null) {
+            return ResponseEntity.ok(petEventId);
+        }
+        return ResponseEntity.badRequest().build();
     }
 
     @PostMapping("/update")
-    public PetEvent update(@RequestBody PetEventDTO petEventDTO) {
+    public ResponseEntity<Long> update(@RequestBody PetEventDTO petEventDTO) {
         PetEvent petEvent = mapper.toEntity(petEventDTO);
-        return service.update(petEvent);
+        Long petEventId = service.update(petEvent);
+        if (petEventId != null) {
+            return ResponseEntity.ok(petEventId);
+        }
+        return ResponseEntity.badRequest().build();
     }
 
     @DeleteMapping("/{id}")

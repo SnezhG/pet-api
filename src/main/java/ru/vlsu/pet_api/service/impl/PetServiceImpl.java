@@ -1,9 +1,13 @@
 package ru.vlsu.pet_api.service.impl;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.vlsu.pet_api.entity.Pet;
+import ru.vlsu.pet_api.entity.PetUser;
+import ru.vlsu.pet_api.jwt.JwtService;
 import ru.vlsu.pet_api.repository.PetRepository;
+import ru.vlsu.pet_api.repository.PetUserRepository;
 import ru.vlsu.pet_api.service.PetService;
 
 import java.io.IOException;
@@ -16,6 +20,10 @@ public class PetServiceImpl implements PetService {
     private PetRepository baseRepository;
     @Autowired
     private PetFileServiceImpl petFileService;
+    @Autowired
+    private PetUserRepository petUserRepository;
+    @Autowired
+    private JwtService jwtService;
 
     @Override
     public Pet getById(Long id) throws IOException {
@@ -32,21 +40,32 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
-    public List<Pet> getAllByUser(Long userId) throws IOException {
-        List<Pet> pets = baseRepository.findAllByUser_Id(userId);
-        for (Pet pet : pets) {
-            if (pet.getPhoto() != null) {
-                String petPhoto = petFileService.downloadFile(pet.getPhoto());
-                pet.setPhoto(petPhoto);
+    public List<Pet> getAllByUser(HttpServletRequest request) throws IOException {
+        String petUserEmail = jwtService.extractUsername(request.getHeader("Authorization").substring(7));
+        Optional<PetUser> petUser = petUserRepository.findByEmail(petUserEmail);
+        if (petUser.isPresent()) {
+            List<Pet> pets = baseRepository.findAllByUser_Id(petUser.get().getId());
+            for (Pet pet : pets) {
+                if (pet.getPhoto() != null) {
+                    String petPhoto = petFileService.downloadFile(pet.getPhoto());
+                    pet.setPhoto(petPhoto);
+                }
             }
+            return pets;
         }
-        return pets;
+        return null;
     }
 
     @Override
-    public Long create(Pet pet) throws IOException {
-        String photoUri = petFileService.uploadFile(pet.getPhoto(), pet.getUser().getId().toString());
-        pet.setPhoto(photoUri);
+    public Long create(Pet pet, HttpServletRequest request) throws IOException {
+        String petUserEmail = jwtService.extractUsername(request.getHeader("Authorization").substring(7));
+        Optional<PetUser> petUser = petUserRepository.findByEmail(petUserEmail);
+        if (petUser.isPresent()) {
+            PetUser user = petUser.get();
+            pet.setUser(user);
+            String photoUri = petFileService.uploadFile(pet.getPhoto(), user.getId().toString());
+            pet.setPhoto(photoUri);
+        }
         Pet savedPet = baseRepository.save(pet);
         return savedPet.getId();
     }

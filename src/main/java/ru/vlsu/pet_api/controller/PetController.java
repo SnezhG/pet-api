@@ -1,5 +1,6 @@
 package ru.vlsu.pet_api.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,16 +27,16 @@ public class PetController {
         return ResponseEntity.ok(petDTO);
     }
 
-    @GetMapping("/by-user/{id}")
-    public ResponseEntity<List<PetDTO>> getAllByUser(@PathVariable Long id) throws IOException {
-        List<PetDTO> petDTOList = mapper.petListToPetDTOList(service.getAllByUser(id));
+    @GetMapping("/by-user")
+    public ResponseEntity<List<PetDTO>> getAllByUser(HttpServletRequest request) throws IOException {
+        List<PetDTO> petDTOList = mapper.petListToPetDTOList(service.getAllByUser(request));
         return ResponseEntity.ok(petDTOList);
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Long> create(@RequestBody PetDTO petDTO) throws IOException {
+    public ResponseEntity<Long> create(@RequestBody PetDTO petDTO, HttpServletRequest request) throws IOException {
         Pet pet = mapper.petDTOToPet(petDTO);
-        Long petId = service.create(pet);
+        Long petId = service.create(pet, request);
         if (petId != null) {
             return ResponseEntity.ok(petId);
         }
