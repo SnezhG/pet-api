@@ -1,6 +1,7 @@
 package ru.vlsu.pet_api.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,22 +24,26 @@ public class DictionaryController {
     private DictionaryMapper mapper;
 
     @GetMapping("/all-breeds-by-species/{id}")
-    public List<BreedDTO> getAllBreedsBySpecies(@PathVariable Long id) {
-        return mapper.breedListToBreedDTOList(service.getAllBreedsBySpecies(id));
+    public ResponseEntity<List<BreedDTO>> getAllBreedsBySpecies(@PathVariable Long id) {
+        List<BreedDTO> breedDTOList = mapper.breedListToBreedDTOList(service.getAllBreedsBySpecies(id));
+        return ResponseEntity.ok(breedDTOList);
     }
 
     @GetMapping("/all-species")
-    public List<SpeciesDTO> getAllSpecies() {
-        return mapper.speciesListToSpeciesDTOList(service.getAllSpecies());
+    public ResponseEntity<List<SpeciesDTO>> getAllSpecies() {
+        List<SpeciesDTO> speciesDTOList = mapper.speciesListToSpeciesDTOList(service.getAllSpecies());
+        return ResponseEntity.ok(speciesDTOList);
     }
 
     @GetMapping("/all-event-types")
-    public List<PetEventTypeDTO> getAllEventTypes() {
-        return mapper.eventTypeListToEventTypeDTOList(service.getAllEventTypes());
+    public ResponseEntity<List<PetEventTypeDTO>> getAllEventTypes() {
+        List<PetEventTypeDTO> petEventTypeDTOList = mapper.eventTypeListToEventTypeDTOList(service.getAllEventTypes());
+        return ResponseEntity.ok(petEventTypeDTOList);
     }
 
     @GetMapping("/all-sexes")
-    public List<SexDTO> getAllSexes() {
-        return mapper.sexListTosexDTOList(service.getAllSexes());
+    public ResponseEntity<List<SexDTO>> getAllSexes() {
+        List<SexDTO> sexDTOList = mapper.sexListTosexDTOList(service.getAllSexes());
+        return ResponseEntity.ok(sexDTOList);
     }
 }
