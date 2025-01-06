@@ -1,8 +1,10 @@
 package ru.vlsu.pet_api.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.vlsu.pet_api.dto.AuthenticationRequest;
@@ -15,6 +17,7 @@ import ru.vlsu.pet_api.repository.PetUserRepository;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AuthenticationServiceImpl {
 
     private final PetUserRepository repository;
@@ -31,21 +34,28 @@ public class AuthenticationServiceImpl {
         String jwtToken = jwtService.generateToken(petUser);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
+                .email(petUser.getEmail())
                 .build();
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
-                        request.getPassword()
-                )
-        );
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            request.getEmail(),
+                            request.getPassword()
+                    )
+            );
+        } catch (AuthenticationException e) {
+            throw new RuntimeException("Authentication failed: " + e.getMessage());
+        }
+
         PetUser petUser = repository.findByEmail(request.getEmail())
                 .orElseThrow();
         String jwtToken = jwtService.generateToken(petUser);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
+                .email(petUser.getEmail())
                 .build();
     }
 }
