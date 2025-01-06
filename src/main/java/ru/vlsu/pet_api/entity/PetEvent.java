@@ -3,12 +3,14 @@ package ru.vlsu.pet_api.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "pet_event")
 @Data
+@ToString(exclude = {"pet", "type", "user", "petEventsNotif"})
 public class PetEvent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

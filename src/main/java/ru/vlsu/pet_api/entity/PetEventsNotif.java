@@ -2,12 +2,14 @@ package ru.vlsu.pet_api.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "pet_events_notif")
 @Data
+@ToString(exclude = "petEvent")
 public class PetEventsNotif {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -3,6 +3,7 @@ package ru.vlsu.pet_api.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 @Entity
 @Table(name = "pet")
 @Data
+@ToString(exclude = {"species", "breed", "sex", "user", "petEvents"})
 public class Pet {
 
     @Id
