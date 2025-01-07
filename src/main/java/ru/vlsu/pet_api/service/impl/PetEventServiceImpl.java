@@ -107,6 +107,7 @@ public class PetEventServiceImpl implements PetEventService {
         } else if (newPetEvent.isNotifEnabled()) {
             petEventsNotifService.updatePetEventNotif(oldPetEvent, newPetEvent);
         }
+        oldPetEvent.setNotifEnabled(newPetEvent.isNotifEnabled());
         PetEvent petEventSaved = repository.save(oldPetEvent);
         return petEventSaved.getId();
     }
